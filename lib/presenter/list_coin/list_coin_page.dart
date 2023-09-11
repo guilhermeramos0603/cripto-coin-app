@@ -92,9 +92,6 @@ class _CoinPageState extends State<ListCoinPage> {
           padding: const EdgeInsets.all(16),
           separatorBuilder: (_, __) => const Divider(),
           itemCount: table.length),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {}, label: const Text('Favorite')),
     );
   }
 }
