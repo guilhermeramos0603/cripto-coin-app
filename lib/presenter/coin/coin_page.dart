@@ -4,16 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class CoinPage extends StatefulWidget {
-  Coin coin;
+  final Coin coin;
 
-  CoinPage({super.key, required this.coin});
+  const CoinPage({super.key, required this.coin});
 
   @override
   State<CoinPage> createState() => _CoinPageState();
 }
 
 class _CoinPageState extends State<CoinPage> {
-  NumberFormat real = NumberFormat.currency(locale: 'pt_BR', name: 'R\$');
+  NumberFormat dollar = NumberFormat.currency(locale: 'en_US', name: '\$');
 
   final _form = GlobalKey<FormState>();
   final _value = TextEditingController();
@@ -56,7 +56,7 @@ class _CoinPageState extends State<CoinPage> {
                     width: 10,
                   ),
                   Text(
-                    real.format(widget.coin.price),
+                    dollar.format(widget.coin.price),
                     style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w600,

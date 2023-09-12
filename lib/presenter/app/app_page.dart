@@ -1,5 +1,4 @@
 import 'package:cripto_coin/presenter/home/home_page.dart';
-import 'package:cripto_coin/presenter/list_coin/list_coin_page.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
