@@ -1,20 +1,26 @@
-import 'package:cripto_coin/business/repositoriesImp/coin/CoinRepositoryImp.dart';
-import 'package:cripto_coin/core/models/coin/Coin.dart';
+import 'package:cripto_coin/business/repositoriesImp/coin/coin_repository_imp.dart';
+import 'package:cripto_coin/business/repositoriesImp/favorites/favorites_repository_imp.dart';
+import 'package:cripto_coin/core/models/coin/coin_model.dart';
+import 'package:cripto_coin/core/repositories/favorites/favorites_repository.dart';
+import 'package:cripto_coin/presenter/coin/coin_page.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class CoinPage extends StatefulWidget {
-  const CoinPage({super.key});
+class ListCoinPage extends StatefulWidget {
+  const ListCoinPage({super.key});
 
   @override
-  State<CoinPage> createState() => _CoinPageState();
+  State<ListCoinPage> createState() => _CoinPageState();
 }
 
-class _CoinPageState extends State<CoinPage> {
+class _CoinPageState extends State<ListCoinPage> {
   final table = CoinRepositoryImp.table;
   NumberFormat dollar = NumberFormat.currency(locale: 'en-US', name: '\$');
   List<Coin> selectedTable = [];
+  late FavoriteRepositoryImp _favoriteRepository;
 
   appBarDynamic() {
     if (selectedTable.isEmpty) {
@@ -40,8 +46,20 @@ class _CoinPageState extends State<CoinPage> {
     );
   }
 
+  showCoinDetails(Coin coin) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CoinPage(
+          coin: coin,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    _favoriteRepository = context.watch<FavoriteRepositoryImp>();
     return Scaffold(
       appBar: appBarDynamic(),
       body: ListView.separated(
@@ -59,29 +77,43 @@ class _CoinPageState extends State<CoinPage> {
                       table[index].icon,
                       width: 30,
                     )),
-              title: Text(
-                table[index].name,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              title: Row(
+                children: [
+                  Text(
+                    table[index].name,
+                    style:
+                        const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                  if(_favoriteRepository.list.contains(table[index]))
+                    const Icon(Icons.star, color: Colors.amber, size: 18,)
+                ],
               ),
               trailing: Text(dollar.format(table[index].price)),
               selected: selectedTable.contains(table[index]),
               selectedTileColor: Colors.red.shade100,
-              onTap: () {
+              onLongPress: () {
                 setState(() {
                   (selectedTable.contains(table[index]))
                       ? selectedTable.remove(table[index])
                       : selectedTable.add(table[index]);
                 });
               },
+              onTap: () => showCoinDetails(table[index]),
             );
           },
           padding: const EdgeInsets.all(16),
           separatorBuilder: (_, __) => const Divider(),
           itemCount: table.length),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {}, label: Text('Favorite')),
+      floatingActionButton: selectedTable.isNotEmpty
+          ? FloatingActionButton.extended(
+              onPressed: () {
+                _favoriteRepository.saveAll(selectedTable);
+                setState(() {
+                  selectedTable = [];
+                });
+              },
+              label: const Text('ADD TO FAVORITES'))
+          : Container(),
     );
   }
 }
