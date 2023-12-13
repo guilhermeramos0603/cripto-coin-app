@@ -1,13 +1,12 @@
-import 'package:cripto_coin/business/repositoriesImp/coin/coin_repository_imp.dart';
-import 'package:cripto_coin/business/repositoriesImp/favorites/favorites_repository_imp.dart';
-import 'package:cripto_coin/core/models/coin/coin_model.dart';
-import 'package:cripto_coin/core/repositories/favorites/favorites_repository.dart';
-import 'package:cripto_coin/presenter/coin/coin_page.dart';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:cripto_coin/configs/app_settings.dart';
+import 'package:cripto_coin/presenter/coin/coin_page.dart';
+import 'package:cripto_coin/core/models/coin/coin_model.dart';
+import 'package:cripto_coin/business/repositoriesImp/coin/coin_repository_imp.dart';
+import 'package:cripto_coin/business/repositoriesImp/favorites/favorites_repository_imp.dart';
 
 class ListCoinPage extends StatefulWidget {
   const ListCoinPage({super.key});
@@ -18,14 +17,41 @@ class ListCoinPage extends StatefulWidget {
 
 class _CoinPageState extends State<ListCoinPage> {
   final table = CoinRepositoryImp.table;
-  NumberFormat dollar = NumberFormat.currency(locale: 'en-US', name: '\$');
+  late NumberFormat dollar;
+  late Map<String, String> loc;
   List<Coin> selectedTable = [];
   late FavoriteRepositoryImp _favoriteRepository;
+
+  readNumberFormat() {
+    loc = context.watch<AppSettings>().locale;
+    dollar = NumberFormat.currency(locale: loc['locale'], name: loc['name']);
+  }
+
+  changeLanguageButton() {
+    final locale = loc['locale'] == 'pt_BR' ? 'en_US' : 'pt_BR';
+    final name = loc['name'] == 'R\$' ? '\$' : 'R\$';
+
+    return PopupMenuButton(
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          child: ListTile(
+            leading: const Icon(Icons.swap_vert),
+            title: Text("Use $locale"),
+            onTap: () {
+              context.read<AppSettings>().setLocale(locale, name);
+              Navigator.pop(context);
+            },
+          ),
+        )
+      ],
+    );
+  }
 
   appBarDynamic() {
     if (selectedTable.isEmpty) {
       return AppBar(
         title: const Text("Cripto Coin"),
+        actions: [changeLanguageButton()],
       );
     }
 
@@ -60,6 +86,8 @@ class _CoinPageState extends State<ListCoinPage> {
   @override
   Widget build(BuildContext context) {
     _favoriteRepository = context.watch<FavoriteRepositoryImp>();
+
+    readNumberFormat();
     return Scaffold(
       appBar: appBarDynamic(),
       body: ListView.separated(
@@ -81,11 +109,15 @@ class _CoinPageState extends State<ListCoinPage> {
                 children: [
                   Text(
                     table[index].name,
-                    style:
-                        const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w500),
                   ),
-                  if(_favoriteRepository.list.contains(table[index]))
-                    const Icon(Icons.star, color: Colors.amber, size: 18,)
+                  if (_favoriteRepository.list.contains(table[index]))
+                    const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                      size: 18,
+                    )
                 ],
               ),
               trailing: Text(dollar.format(table[index].price)),
