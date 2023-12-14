@@ -112,7 +112,8 @@ class _CoinPageState extends State<ListCoinPage> {
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.w500),
                   ),
-                  if (_favoriteRepository.list.contains(table[index]))
+                  if (_favoriteRepository.list
+                      .any((fav) => fav.acronym == table[index].acronym))
                     const Icon(
                       Icons.star,
                       color: Colors.amber,

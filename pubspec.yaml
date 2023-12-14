@@ -16,6 +16,9 @@ dependencies:
   intl:
   provider: 
   shared_preferences:
+  hive:
+  hive_flutter:
+  path_provider:
 
 dev_dependencies:
   flutter_test:
