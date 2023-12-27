@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:cripto_coin/presenter/setting/setting_page.dart';
 import 'package:cripto_coin/presenter/favorites/favorites_page.dart';
 import 'package:cripto_coin/presenter/list_coin/view/list_coin_page.dart';
-import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage> {
       body: PageView(
         controller: pc,
         onPageChanged: setCurrentPage,
-        children: const <Widget>[ListCoinPage(), FavoritesPage()],
+        children: const <Widget>[ListCoinPage(), FavoritesPage(), SettingPage()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
@@ -43,6 +44,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.star),
             label: 'Favorites',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
           ),
         ],
         onTap: (page) {
