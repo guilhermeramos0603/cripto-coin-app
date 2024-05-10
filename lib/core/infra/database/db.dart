@@ -48,7 +48,7 @@ class Db {
   String get _history => ''' 
   CREATE TABLE history (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    createdAt INT PRIMARY KEY,
+    createdAt INT,
     operation_type TEXT,
     coin TEXT
     acronym TEXT

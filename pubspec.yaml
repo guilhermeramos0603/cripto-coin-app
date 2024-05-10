@@ -14,12 +14,13 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   intl:
-  provider: 
+  provider:
   shared_preferences:
   hive:
   hive_flutter:
   path_provider:
   sqflite:
+  path:
 
 dev_dependencies:
   flutter_test:
