@@ -1,9 +1,9 @@
-import 'package:cripto_coin/business/repositoriesImp/favorites/favorites_repository_imp.dart';
-import 'package:cripto_coin/core/models/coin/coin_model.dart';
-import 'package:cripto_coin/presenter/coin/coin_page.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cripto_coin/presenter/coin/coin_page.dart';
+import 'package:cripto_coin/data/models/coin/coin_model.dart';
+import 'package:cripto_coin/data/repositories/favorites/favorites_repository_imp.dart';
 
 class CoinCard extends StatefulWidget {
   final Coin coin;
@@ -71,7 +71,8 @@ class _CoinCardState extends State<CoinCard> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 decoration: BoxDecoration(
                   color: priceColor['down']!.withOpacity(0.05),
                   border: Border.all(
@@ -96,7 +97,9 @@ class _CoinCardState extends State<CoinCard> {
                       title: const Text('Remove Favorites'),
                       onTap: () {
                         Navigator.pop(context);
-                        Provider.of<FavoriteRepositoryImp>(context, listen: false).remove(widget.coin);
+                        Provider.of<FavoriteRepositoryImp>(context,
+                                listen: false)
+                            .remove(widget.coin);
                       },
                     ),
                   ),

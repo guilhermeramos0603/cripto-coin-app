@@ -2,8 +2,8 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cripto_coin/configs/app_settings.dart';
-import 'package:cripto_coin/business/repositoriesImp/account/account_repository_imp.dart';
+import 'package:cripto_coin/core/infra/database/app_settings.dart';
+import 'package:cripto_coin/data/repositories/account/account_repository_imp.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});

@@ -1,5 +1,5 @@
-import 'package:cripto_coin/core/models/coin/coin_model.dart';
-import 'package:cripto_coin/core/repositories/coin/coin_repository.dart';
+import 'package:cripto_coin/data/models/coin/coin_model.dart';
+import 'package:cripto_coin/domain/repositories/coin/coin_repository.dart';
 
 class CoinRepositoryImp extends CoinRepository {
   static List<Coin> table = [

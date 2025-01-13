@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:cripto_coin/core/infra/database/db.dart';
-import 'package:cripto_coin/core/models/position/position_model.dart';
-import 'package:cripto_coin/core/repositories/account/account_repository.dart';
+import 'package:cripto_coin/data/models/position/position_model.dart';
+import 'package:cripto_coin/domain/repositories/account/account_repository.dart';
 
 class AccountRepositoryImp extends AccountRepository {
   late Database db;

@@ -1,7 +1,7 @@
-import 'package:cripto_coin/business/repositoriesImp/favorites/favorites_repository_imp.dart';
-import 'package:cripto_coin/presenter/favorites/widgets/coin_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cripto_coin/presenter/favorites/widgets/coin_card.dart';
+import 'package:cripto_coin/data/repositories/favorites/favorites_repository_imp.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -21,13 +21,18 @@ class _FavoritesPageState extends State<FavoritesPage> {
         child: Consumer<FavoriteRepositoryImp>(
           builder: (context, favorites, child) {
             return favorites.list.isEmpty
-            ? const ListTile(
-              leading: Icon(Icons.star),
-              title: Text('You dont have coins in favorite'),
-            )
-            :ListView.builder(itemCount: favorites.list.length, itemBuilder: (_, index) {
-              return CoinCard(coin: favorites.list[index],);
-            },);
+                ? const ListTile(
+                    leading: Icon(Icons.star),
+                    title: Text('You dont have coins in favorite'),
+                  )
+                : ListView.builder(
+                    itemCount: favorites.list.length,
+                    itemBuilder: (_, index) {
+                      return CoinCard(
+                        coin: favorites.list[index],
+                      );
+                    },
+                  );
           },
         ),
       ),

@@ -1,7 +1,7 @@
-import 'package:cripto_coin/core/models/coin/coin_model.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+import 'package:cripto_coin/data/models/coin/coin_model.dart';
 
 class CoinPage extends StatefulWidget {
   final Coin coin;

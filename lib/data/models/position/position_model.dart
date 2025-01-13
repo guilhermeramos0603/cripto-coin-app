@@ -1,4 +1,4 @@
-import 'package:cripto_coin/core/models/coin/coin_model.dart';
+import 'package:cripto_coin/data/models/coin/coin_model.dart';
 
 class Position {
   Coin coin;

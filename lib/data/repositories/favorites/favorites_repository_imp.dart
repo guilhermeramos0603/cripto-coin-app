@@ -1,8 +1,8 @@
 import 'dart:collection';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:cripto_coin/core/models/coin/coin_model.dart';
+import 'package:cripto_coin/data/models/coin/coin_model.dart';
 import 'package:cripto_coin/core/adapters/coin_hive_adapter.dart';
-import 'package:cripto_coin/core/repositories/favorites/favorites_repository.dart';
+import 'package:cripto_coin/domain/repositories/favorites/favorites_repository.dart';
 
 class FavoriteRepositoryImp extends FavoriteRepository {
   final List<Coin> _list = [];
